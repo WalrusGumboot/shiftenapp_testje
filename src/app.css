@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+}
+
+@supports (font-variation-settings: normal) {
+  :root { font-family: InterVariable, sans-serif; }
+}
+
+@theme {
+    --color-primary-50: #f0f6fe;
+    --color-primary-100: #deeafb;
+    --color-primary-200: #c5dcf8;
+    --color-primary-300: #9dc7f3;
+    --color-primary-400: #62a0ea;
+    --color-primary-500: #4c87e5;
+    --color-primary-600: #376bd9;
+    --color-primary-700: #2e57c7;
+    --color-primary-800: #2c48a1;
+    --color-primary-900: #284080;
+    --color-primary-950: #1d284e;
+}

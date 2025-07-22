@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_2)">
+<mask id="mask0_1_2" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+<circle cx="128" cy="128" r="128" fill="#EACACA"/>
+</mask>
+<g mask="url(#mask0_1_2)">
+<circle cx="128" cy="95.8345" r="48.5736" stroke="black" stroke-width="6"/>
+<circle cx="128" cy="229.002" r="82.992" stroke="black" stroke-width="6"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_1_2">
+<rect width="256" height="256" fill="white"/>
+</clipPath>
+</defs>
+</svg>
