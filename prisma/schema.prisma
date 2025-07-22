@@ -1,0 +1,126 @@
+generator client {
+  provider      = "prisma-client"
+  output        = "../src/lib/prisma-client"
+  moduleFormat  = "esm"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:EnWatIsDaarHetPraktischNutVan@0.0.0.0:5432/shiften"
+}
+
+enum Vereniging {
+  Apolloon
+  LBK
+  Ekonomika
+  Farmaceutica
+  Canonica
+  Apollonia
+  Eros
+  KLA
+  Medica
+  Medisoc
+  Industria
+  VTK
+  Alfa
+  Babylon
+  Eoos
+  Historia
+  Mecenas
+  Musicologica
+  Pedagogische_Kring
+  Psychologische_Kring
+  Crimen
+  VRG
+  Politika
+  Katechetika
+  Atlas
+  BIOS
+  Chemika
+  Wina
+  NFK
+  Cluster
+  De_Kelten
+  Diana
+  Docentica
+  Soca
+  StEIL
+
+  LOKO
+  KOCO_Letteren
+  Scientica
+}
+
+model VerenigingHiërarchie {
+  id   Int          @id @default(autoincrement())
+  head Vereniging
+  body Vereniging[]
+}
+
+model Gebruiker {
+  id         Int    @id @default(autoincrement())
+  email      String @unique
+  voornaam   String
+  achternaam String
+
+  vereniging Vereniging
+
+  beheerderVan Shiftenlijst[]
+  toekenningen ShiftToekenning[]
+}
+
+model Shiftenlijst {
+  id         Int        @id @default(autoincrement())
+  vereniging Vereniging
+  intern     Boolean    @default(false) // moeten we kijken naar VerenigingHiërarchieën of niet?
+
+  naam         String
+  beschrijving String?
+  shiften      Shift[]
+
+  beheerders Gebruiker[]
+}
+
+model Shift {
+  id Int @id @default(autoincrement())
+
+  lijst      Shiftenlijst @relation(fields: [lijstId], references: [id])
+  lijstId    Int
+  vereniging Vereniging? // als dit niet NULL is, overschrijft het de vereniging van `lijst`. nuttig voor bv shiften in een LOKO-lijst toe te kennen aan Verenigingen
+
+  naam         String
+  beschrijving String?
+  locatie      String
+  begin        DateTime
+  duur         Int // aantal minuten
+  herhalingen  Int      @default(1)
+
+  maxShifters      Int?
+  maxVrijwilligers Int?
+  combineerbaar    Boolean
+
+  toekenningen ShiftToekenning[]
+
+  opmerkingen Opmerking[]
+}
+
+model ShiftToekenning {
+  id          Int       @id @default(autoincrement())
+  shift       Shift     @relation(fields: [shiftId], references: [id])
+  shiftId     Int
+  gebruiker   Gebruiker @relation(fields: [gebruikerId], references: [id])
+  gebruikerId Int
+
+  indices Int[] @default([0]) // om invullingen van instanties van herhaalde shifts te modelleren
+}
+
+model Opmerking {
+  id      Int   @id @default(autoincrement())
+  shift   Shift @relation(fields: [shiftId], references: [id])
+  shiftId Int
+
+  inhoud    String
+  afzender  String   @default("SYSTEEM")
+  timestamp DateTime @default(now())
+}

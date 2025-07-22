@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { HerhaaldeShift } from "$lib";
+    import type { OngepubliceerdeShift } from "$lib/types";
     import { onMount } from "svelte";
     import { SvelteGantt, SvelteGanttTable } from "svelte-gantt";
-    let { hShiften }: { hShiften: HerhaaldeShift[] } = $props();
+    let { shiften }: { shiften: OngepubliceerdeShift[] } = $props();
 
     let fixedGanttOptions = {
         tableHeaders: [ { title: "Shift", property: "shiftNaam", type: "tree" } ],
@@ -11,25 +11,25 @@
         ganttTableModules: [SvelteGanttTable],
     }
 
-    let rows = $derived(hShiften.map((hShift, id) => { return {id, shiftNaam: hShift.shift.naam} }));
+    let rows = $derived(shiften.map((shift, id) => { return {id, shiftNaam: shift.naam} }));
     let taskIdOffsets = $derived.by(() => {
-        const iter = Array(hShiften.length).keys().map(i => {
-            const upTo = hShiften.slice(0, i);
-            return upTo.map(hS => hS.herhalingen).reduce((acc, curr) => acc + curr, 0);
+        const iter = Array(shiften.length).keys().map(i => {
+            const upTo = shiften.slice(0, i);
+            return upTo.map(s => s.herhalingen).reduce((acc, curr) => acc + curr, 0);
         });
 
         return Array.from(iter);
     });
 
-    let tasks = $derived(hShiften.flatMap((hShift, resourceId) => {
+    let tasks = $derived(shiften.flatMap((shift, resourceId) => {
         let tasksForHShift = []
-        for (let i = 0; i < hShift.herhalingen; i++) {
+        for (let i = 0; i < shift.herhalingen; i++) {
             tasksForHShift.push({
                 id: taskIdOffsets[resourceId] + i,
                 resourceId,
-                label: `${hShift.shift.naam} ${i + 1}`,
-                from: hShift.shift.begin.getTime() + i * (hShift.shift.duur * 60 * 1000),
-                to: hShift.shift.begin.getTime() + (i + 1) * (hShift.shift.duur * 60 * 1000),
+                label: `${shift.naam} ${i + 1}`,
+                from: shift.begin.getTime() + i * (shift.duur * 60 * 1000),
+                to: shift.begin.getTime() + (i + 1) * (shift.duur * 60 * 1000),
                 resizable: false,
                 draggable: false,
                 classes: "bg-primary-500 hover:bg-primary-600 border-primary-200 border-2 text-white transition-colors"
@@ -37,6 +37,7 @@
         }
         return tasksForHShift;
     }));
+
 
     let ganttOptions = $derived({
         rows,
@@ -62,6 +63,6 @@
     })
 </script>
 
-{#if hShiften.length > 0}
+{#if shiften.length > 0}
     <div class="bg-white p-3 rounded-sm" bind:this={div}></div>
 {/if}

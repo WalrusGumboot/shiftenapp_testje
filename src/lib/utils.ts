@@ -34,11 +34,3 @@ export const vindEindtijd = (begin: Date, minuten: number): Date => {
 export const vindEindtijdUM = (begin: Date, delta: {uren: number, minuten: number}): Date => {
 	return new Date(begin.getTime() + (delta.uren * 60 + delta.minuten) * 60 * 1000)
 }
-
-export function randInt(min: number, max: number): number {
-	return min + Math.floor(Math.random() * (max - min))
-}
-
-export function kies<T>(lijst: T[]): T {
-	return lijst[randInt(0, lijst.length)]
-}

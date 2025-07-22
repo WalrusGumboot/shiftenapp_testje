@@ -1,52 +1,13 @@
 <script lang="ts">
-	import { Vereniging, type Shift, type Shiftenlijst, type Gebruiker } from "$lib";
-    import { Button, ShiftCard, ShiftenlijstCard } from "$lib/components";
-    import { goto } from "$app/navigation";
-    import ProfielWidget from "$lib/components/ProfielComponent.svelte";
+    import { ShiftCard, ShiftenlijstCard } from "$lib/components";
     import Scaffold from "$lib/components/Scaffold.svelte";
+    import type { PageData } from "./$types";
 
-	const huidigeGebruiker: Gebruiker = {
-		voornaam: "Simeon",
-		achternaam: "Duwel",
-		email: "simeon@wina.be",
-		vereniging: Vereniging.Wina
-	}
-
-	const voorbeeldShiftenlijst1: Shiftenlijst = {
-		vereniging: Vereniging.Wina,
-		naam: "Lenteconcert",
-		begin: new Date(2025, 3, 15, 14),
-		eind: new Date(2025, 3, 17, 23),
-		shiften: 40,
-		onopgevuld: 12,
-		beheerders: []
-	}
-
-	const voorbeeldShiftenlijst2: Shiftenlijst = {
-		vereniging: Vereniging.LOKO,
-		naam: "International Party",
-		begin: new Date(2025, 4, 22, 14),
-		eind: new Date(2025, 4, 22, 23),
-		shiften: 20,
-		onopgevuld: 3,
-		beheerders: []
-	}
-
-	const voorbeeldShift1: Shift = {
-		shiftenlijst: voorbeeldShiftenlijst1,
-		naam: "Afwasshift",
-		beschrijving: "Let extra goed op de cavaglazen!",
-		locatie: "Winagang",
-		begin: new Date(2025, 3, 17, 21),
-		duur: 120,
-		maxShifters: 3,
-		combineerbaar: false,
-		ingevuldDoor: []
-	}
+	export let data: PageData;
 </script>
 
 {#snippet titel()}
-	Welkom, <span class="text-primary-600 font-semibold">{huidigeGebruiker.voornaam}</span>.
+	Welkom, <span class="text-primary-600 font-semibold">Simeon</span>.
 {/snippet}
 
 <Scaffold {titel}>
@@ -55,8 +16,9 @@
 		<div>
 			<h2 class="text-2xl">Openstaande shiftenlijsten</h2>
 			<div class="grid grid-cols-2 gap-4">
-				<ShiftenlijstCard item={voorbeeldShiftenlijst1} />
-				<ShiftenlijstCard item={voorbeeldShiftenlijst2} />
+				{#each data.shiftenlijsten as item}				
+					<ShiftenlijstCard {item} />
+				{/each}
 			</div>
 		</div>
 
@@ -69,7 +31,10 @@
 					<option>maand</option>
 				</select>
 			</span>)</h2>
-			<ShiftCard toonShiftenlijst item={voorbeeldShift1} />
+
+			{#each data.shiftenlijsten.flatMap(s => s.shiften) as item}
+				<ShiftCard toonShiftenlijst {item} />
+			{/each}
 		</div>
 	</div>
 </Scaffold>

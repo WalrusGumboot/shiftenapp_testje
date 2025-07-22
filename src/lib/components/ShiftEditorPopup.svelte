@@ -1,12 +1,15 @@
 <script lang="ts">
-    import type { Shift } from "$lib";
+    import type { OngepubliceerdeShift } from "$lib/types";
     import { fade } from "svelte/transition"; 
     import FlatButton from "./FlatButton.svelte";
     import Button from "./Button.svelte";
     import { DateInput } from "date-picker-svelte";
+    import TijdPicker from "./TijdPicker.svelte";
 
     let { item = $bindable(), okCallback, annuleerCallback }: 
-        { item: Shift, okCallback: () => void, annuleerCallback: () => void } = $props();
+        { item: OngepubliceerdeShift, okCallback: () => void, annuleerCallback: () => void } = $props();
+    
+    $inspect(item)
 </script>
 
 <div transition:fade={{duration: 75}} class="z-10 p-32 fixed inset-0 bg-black/50 flex justify-center items-center">
@@ -26,7 +29,7 @@
             <DateInput timePrecision="minute" bind:value={item.begin} />
             
             <p>Lengte (uren:minuten)</p>
-            <input min=0 type=time bind:value={item.duur}>
+            <TijdPicker bind:minuten={item.duur} />
         </div>
 
         <p>Maximum aantal shifters</p>

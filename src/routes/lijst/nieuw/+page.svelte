@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { type Shift, type HerhaaldeShift } from "$lib";
     import { AdminShiftCard, Button, FlatButton, ShiftEditorPopup, ShiftenGantt } from "$lib/components";
+    import type { OngepubliceerdeShift } from "$lib/types";
 
     let naam = $state("");
     let beschrijving = $state("");
-    let shiften = $state<HerhaaldeShift[]>([]);
+    let shiften = $state<OngepubliceerdeShift[]>([]);
 
-    let bewerkteShift = $state<Shift | undefined>();
+    let bewerkteShift = $state<OngepubliceerdeShift | undefined>();
     let isNieuweShift = $state<boolean | undefined>();
     
     function okCallback() {
         if (isNieuweShift!) {
-            shiften.push({shift: bewerkteShift!, herhalingen: 1});
+            shiften.push(bewerkteShift!);
         }
         bewerkteShift = undefined;
         isNieuweShift = undefined;
@@ -56,7 +56,7 @@
             {#each shiften as item, index}
                 <AdminShiftCard 
                     {item} 
-                    bewerkCallback={() => {isNieuweShift = false; bewerkteShift = item.shift;}}
+                    bewerkCallback={() => {isNieuweShift = false; bewerkteShift = item;}}
                     verwijderCallback={() => {shiften = shiften.toSpliced(index, 1)}} />
             {:else}
                 <div class="p-4 bg-primary-50 rounded-sm">
@@ -67,10 +67,13 @@
                 naam: "",
                 beschrijving: "",
                 locatie: "",
-                ingevuldDoor: [],
                 begin: new Date(),
                 duur: 0,
-                combineerbaar: false
+                combineerbaar: false,
+                herhalingen: 1,
+                maxShifters: null,
+                maxVrijwilligers: null,
+                vereniging: null
             }}}>
                 Voeg nieuwe shift toe
             </FlatButton>
@@ -80,7 +83,7 @@
             <p class="text-xl font-bold text-primary-950">Tijdlijn</p>
             <p>Een snel overzicht van alle shiften.</p>
         </div>
-        <ShiftenGantt hShiften={shiften}/>
+        <ShiftenGantt shiften={shiften}/>
     </div>
 
     <div class="flex flex-row justify-end gap-4">

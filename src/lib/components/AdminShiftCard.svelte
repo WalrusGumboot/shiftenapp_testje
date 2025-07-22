@@ -1,13 +1,13 @@
 <script lang="ts">
     import Card from "./Card.svelte";
     import FlatButton from "./FlatButton.svelte";
-    import { Vereniging, type HerhaaldeShift } from "$lib";
 
     import { formatteerBeginEind, vindEindtijd } from "$lib/utils";
     import { slide } from "svelte/transition";
+    import type { OngepubliceerdeShift } from "$lib/types";
 
     let { item = $bindable(), toonVereniging = false, bewerkCallback, verwijderCallback }: { 
-        item: HerhaaldeShift, 
+        item: OngepubliceerdeShift,
         toonVereniging?: boolean, 
         bewerkCallback: () => void,
         verwijderCallback: () => void } = $props();
@@ -32,13 +32,13 @@
 
 <Card actie={acties}>
     {#if toonVereniging}
-        <p class="text-sm text-neutral-700">{Vereniging[item.shift.vereniging!]}</p>
+        <p class="text-sm text-neutral-700">{item.vereniging!}</p>
     {/if}
-    <p class="text-xl mt-1">{item.shift.naam}</p>
-    {#if item.shift.beschrijving != undefined}
-        <p class="text-sm -mt-1 mb-1 text-neutral-700">{item.shift.beschrijving}</p>
+    <p class="text-xl mt-1">{item.naam}</p>
+    {#if item.beschrijving != undefined}
+        <p class="text-sm -mt-1 mb-1 text-neutral-700">{item.beschrijving}</p>
     {/if}
-    <p>{item.shift.locatie} / {formatteerBeginEind(item.shift.begin, vindEindtijd(item.shift.begin, item.shift.duur))}</p>
+    <p>{item.locatie} / {formatteerBeginEind(item.begin, vindEindtijd(item.begin, item.duur))}</p>
 
     {#if item.herhalingen > 1}
         <div transition:slide={{axis: "y"}} class="bg-primary-800 p-4 rounded-b-sm -m-4 mt-2 text-white flex flex-row items-center gap-2">
@@ -51,7 +51,7 @@
                 class="bg-primary-500 w-6 aspect-square rounded-full hover:cursor-pointer hover:shadow-md hover:scale-105 transition-all">-
             </button>
             <p>
-                Herhaal shift {item.herhalingen} keer ({formatteerBeginEind(item.shift.begin, vindEindtijd(item.shift.begin, item.shift.duur * item.herhalingen))})
+                Herhaal shift {item.herhalingen} keer ({formatteerBeginEind(item.begin, vindEindtijd(item.begin, item.duur * item.herhalingen))})
             </p>
         </div>
     {/if}

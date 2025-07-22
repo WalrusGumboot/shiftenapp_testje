@@ -1,0 +1,90 @@
+{
+    "VerenigingHiërarchie": [
+        {
+            "head": "Scientica",
+            "body": [
+                "Atlas",
+                "BIOS",
+                "Chemika",
+                "Wina"
+            ]
+        }
+    ],
+    "Gebruiker": [
+        {
+            "id": 1,
+            "vereniging": "Wina",
+            "email": "simeon@wina.be",
+            "voornaam": "Simeon",
+            "achternaam": "Duwel"
+        },
+        {
+            "id": 2,
+            "vereniging": "Scientica",
+            "email": "briek@scientica.be",
+            "voornaam": "Briek",
+            "achternaam": "Vancauwenbergh"
+        },
+        {
+            "id": 3,
+            "vereniging": "LOKO",
+            "email": "tim@loko.be",
+            "voornaam": "Tim",
+            "achternaam": "Lefever"
+        }
+    ],
+    "Shiftenlijst": [
+        {
+            "id": 1,
+            "vereniging": "Wina",
+            "naam": "Bicky-eetstand",
+            "beschrijving": "Een Wina-klassieker: Bicky's verkopen op het grasveldje voor de A.",
+            "beheerders": [
+                1
+            ]
+        },
+        {
+            "id": 2,
+            "vereniging": "Scientica",
+            "naam": "Galabal",
+            "beheerders": [
+                2
+            ]
+        }
+    ],
+    "Shift": [
+        {
+            "lijstId": 1,
+            "naam": "Winkelshift",
+            "beschrijving": "Denk eraan een extra Colliebak mee te nemen!",
+            "locatie": "Colruyt Heverlee",
+            "begin": "2025-07-21T14:00:00Z",
+            "duur": 40,
+            "herhalingen": 1,
+            "maxShifters": 2,
+            "combineerbaar": false
+        },
+        {
+            "lijstId": 1,
+            "naam": "Kassashift",
+            "locatie": "Grasveldje voor de A",
+            "begin": "2025-07-22T10:00:00Z",
+            "duur": 120,
+            "herhalingen": 3,
+            "maxShifters": 2,
+            "maxVrijwilligers": 0,
+            "combineerbaar": false
+        },
+        {
+            "lijstId": 1,
+            "naam": "Kookshift",
+            "locatie": "Grasveldje voor de A",
+            "begin": "2025-07-22T10:00:00Z",
+            "duur": 120,
+            "herhalingen": 3,
+            "maxShifters": 4,
+            "maxVrijwilligers": 3,
+            "combineerbaar": false
+        }
+    ]
+}

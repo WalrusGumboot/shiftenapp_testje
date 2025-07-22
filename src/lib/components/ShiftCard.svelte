@@ -1,15 +1,16 @@
 <script lang="ts">
     import Card from "./Card.svelte";
-    import { Vereniging, type Shift } from "$lib";
+    import { type ShiftModel as Shift } from "$lib/prisma-client/models/Shift"
+    import { type ShiftenlijstModel as Shiftenlijst } from "$lib/prisma-client/models/Shiftenlijst"
 
     import { formatteerBeginEind, vindEindtijd } from "$lib/utils";
 
-    let { item, toonShiftenlijst = false}: { item: Shift, toonShiftenlijst?: boolean } = $props();
+    let { item, toonShiftenlijst = false}: { item: Shift & { lijst: Shiftenlijst }, toonShiftenlijst?: boolean } = $props();
 </script>
 
 <Card>
     {#if toonShiftenlijst}
-        <p class="text-sm text-neutral-700 font-light">{Vereniging[item.shiftenlijst!.vereniging]} ❭ <a class="text-black underline font-normal" href="/">{item.shiftenlijst!.naam}</a></p>
+        <p class="text-sm text-neutral-700 font-light">{item.vereniging ?? item.lijst.vereniging} ❭ <a class="text-black underline font-normal" href="/">{item.lijst.naam}</a></p>
     {/if}
     <p class="text-xl mt-1">{item.naam}</p>
     {#if item.beschrijving != undefined}

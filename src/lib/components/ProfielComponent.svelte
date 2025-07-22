@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Gebruiker } from "$lib";
+    import type { GebruikerModel as Gebruiker } from "$lib/prisma-client/models/Gebruiker";
     import avatar from "$lib/assets/avatar.svg";
     import { slide } from "svelte/transition";
 

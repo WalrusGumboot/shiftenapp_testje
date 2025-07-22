@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Gebruiker } from "$lib";
+    import type { GebruikerModel as Gebruiker } from "$lib/prisma-client/models/Gebruiker";
     import type { Snippet } from "svelte";
-    import { ProfielWidget } from ".";
     import NavLink from "./NavLink.svelte";
+    // import { ProfielWidget } from ".";
 
     let { titel, huidigeGebruiker, children }: {titel: Snippet, huidigeGebruiker?: Gebruiker, children: Snippet} = $props();
 </script>
@@ -15,7 +15,7 @@
             <NavLink href="/" tekst="Home" />
             <NavLink href="/lijst" tekst="Shiftenlijsten" />
             <NavLink href="/shift" tekst="Shiften" />
-			<ProfielWidget gebruiker={huidigeGebruiker} />
+			<!-- <ProfielWidget gebruiker={huidigeGebruiker} /> -->
 		</div>
 	</div>
 

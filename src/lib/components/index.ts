@@ -12,6 +12,8 @@ import ShiftenGantt from "./ShiftenGantt.svelte";
 import NavLink from "./NavLink.svelte";
 import Scaffold from "./Scaffold.svelte";
 
+import TijdPicker from "./TijdPicker.svelte";
+
 export { 
     Button,
     Card,
@@ -25,5 +27,7 @@ export {
     ShiftenGantt,
 
     NavLink,
-    Scaffold
+    Scaffold,
+
+    TijdPicker
 }
