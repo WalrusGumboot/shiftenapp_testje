@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: EnWatIsDaarHetPraktischNutVan
+      POSTGRES_DB: shiften
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d shiften"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+    ports:
+      - "5173:5173" # Vite-server
+      - "5555:5555" # Standaardpoort van Prisma Studio
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bun run dev --host 0.0.0.0
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bunx prisma migrate deploy
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+  node_modules:

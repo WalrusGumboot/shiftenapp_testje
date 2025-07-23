@@ -1,38 +1,11 @@
-# sv
+# shiftenapp-svelte
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Joepie een nieuwe versie van een nieuwe versie van een oud project!
 
-## Creating a project
+## Setup
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+1. Zorg ervoor dat je Docker en Docker Compose geïnstalleerd hebt. Volg hiervoor de instructies voor je besturingssysteem.
+2. Clone de repository.
+3. Voer het commando `docker compose start` uit in de repository.
+4. Joepie! De webserver draait nu op poort 5173 (dus als je in een browser naar [http://localhost:5173](http://localhost:5173) navigeert, krijg je de homepage te zien.)
+5. (Optioneel.) Als je alvast wat voorbeelddata in de database wil steken, kun je het _seed-script_ uitvoeren met `docker compose exec app bunx prisma db seed`.

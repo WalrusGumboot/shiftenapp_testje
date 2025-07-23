@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:EnWatIsDaarHetPraktischNutVan@0.0.0.0:5432/shiften"
+  url      = "postgresql://postgres:EnWatIsDaarHetPraktischNutVan@db:5432/shiften"
 }
 
 enum Vereniging {

@@ -22,9 +22,9 @@
     });
 
     let tasks = $derived(shiften.flatMap((shift, resourceId) => {
-        let tasksForHShift = []
+        let tasksForShift = []
         for (let i = 0; i < shift.herhalingen; i++) {
-            tasksForHShift.push({
+            tasksForShift.push({
                 id: taskIdOffsets[resourceId] + i,
                 resourceId,
                 label: `${shift.naam} ${i + 1}`,
@@ -35,7 +35,7 @@
                 classes: "bg-primary-500 hover:bg-primary-600 border-primary-200 border-2 text-white transition-colors"
             })
         }
-        return tasksForHShift;
+        return tasksForShift;
     }));
 
 
